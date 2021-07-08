@@ -1,1 +1,3 @@
 # pydistinto
+
+To facilitate the use of relevant measures that can be used for contrastive text analysis, we are developing a tool written in Python called pydistinto as part of the "Zeta and Company" project. The goal of our project is to achieve a deeper understanding of the different distinctiveness measures and to propose improvements for their implementation and use. For this purpose, we first created a conceptual framework on the basis of which the measures are implemented in pydistinto. With the help of pydistinto, two text corpora can be compared. As a result, a visualization of the top-N distinctive words of the target corpus is obtained.
