@@ -1,6 +1,6 @@
-# pydistinto
+# Pydistinto
 
-**The pydistinto scripts are a Python implementation of different measures of distinctiveness for contrastive text analysis.**
+**The Pydistinto is a Python implementation of different measures of distinctiveness for contrastive text analysis.**
 
 ## What is the purpose?
 
