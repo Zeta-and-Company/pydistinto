@@ -6,7 +6,7 @@
 
 ## What is the purpose?
 
-To facilitate the use of relevant measures that can be used for contrastive text analysis, we are developing a tool written in Python called `Pydistinto` as part of the "Zeta and Company" project. The goal of our project is to achieve a deeper understanding of the different measures of distinctiveness and to propose improvements for their implementation and use. For this purpose, we created a conceptual framework of different measures of distinctiveness and Pydistinto.
+To facilitate the use of relevant measures that can be used for contrastive text analysis, we are developing a tool written in Python called `Pydistinto` as part of the "Zeta and Company" project. The goal of our project is to achieve a deeper understanding of the different measures of distinctiveness and to propose improvements for their implementation and use. For this purpose, we created a [conceptual framework](http://doi.org/10.5281/zenodo.5092328) of different measures of distinctiveness. Based on the framework and Codes from [Pyzeta](https://github.com/cligs/pyzeta) Pydistinto has been developed.
 
 ## Getting help
 
