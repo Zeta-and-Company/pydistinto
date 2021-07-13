@@ -1,8 +1,8 @@
-# Pydistinto
+# Pydistinto - a Python implementation of different measures of distinctiveness for contrastive text analysis
 
 [![DOI](https://zenodo.org/badge/384188711.svg)](https://zenodo.org/badge/latestdoi/384188711)
 
-**The Pydistinto is a Python implementation of different measures of distinctiveness for contrastive text analysis.**
+**The Pydistinto is a further development of [Pyzeta](https://github.com/cligs/pyzeta)**
 
 ## What is the purpose?
 
