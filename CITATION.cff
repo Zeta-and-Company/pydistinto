@@ -1,0 +1,16 @@
+cff-version: 1.0.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Du
+    given-names: Keli
+    orcid: https://orcid.org/0000-0001-7800-0682
+  - family-names: Dudar
+    given-names: Julia
+    orcid: https://orcid.org/0000-0001-5545-9562
+  - family-names: Du
+    given-names: Keli
+    orcid: https://orcid.org/0000-0002-4557-2753
+title: "pydistinto - a Python implementation of different measures of distinctiveness for contrastive text analysis"
+version: 0.1.0
+doi: 
+date-released: 2021-07-13
