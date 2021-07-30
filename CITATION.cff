@@ -12,5 +12,5 @@ authors:
     orcid: https://orcid.org/0000-0002-4557-2753
 title: "pydistinto - a Python implementation of different measures of distinctiveness for contrastive text analysis"
 version: 0.1.0
-doi: 
+doi: 10.5281/zenodo.5094346
 date-released: 2021-07-13
