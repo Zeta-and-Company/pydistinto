@@ -23,9 +23,9 @@ Requirements:
 
 ## How to run pydistinto?
 
-- Adapt the parameters in scripts\parameters.txt to you needs
-- Run preprocessing_before_running_pydistinto.py from the Terminal first
-- Run run_pydistinto_beginners.py
+- Adapt the parameters in `scripts\parameters.txt` to you needs
+- Run `preprocessing_before_running_pydistinto.py` from the Terminal first
+- Run `run_pydistinto_beginners.py`
 
 
 ## What is necessary to run the analyses?
