@@ -10,6 +10,9 @@ To facilitate the use of relevant measures that can be used for contrastive text
 
 ## Getting help
 
+* The `data` folder contains some examples of what input pydistinto needs and the `working_dir` folder contains what output it produces
+* The `howto.md` file contains a brief tutorial of sorts for running analyses with pydistinto.
+
 ## Requirements and installation
 
 * Requirements: Python 3 with pandas, numpy, sklearn, pygal, spacy
