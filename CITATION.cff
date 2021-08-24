@@ -1,4 +1,4 @@
-cff-version: 1.0.0
+cff-version: 1.0.1
 message: "If you use this software, please cite it as below."
 authors:
   - family-names: Du
@@ -11,6 +11,6 @@ authors:
     given-names: Christof
     orcid: https://orcid.org/0000-0002-4557-2753
 title: "pydistinto - a Python implementation of different measures of distinctiveness for contrastive text analysis"
-version: 0.1.0
-doi: 10.5281/zenodo.5094346
-date-released: 2021-07-13
+version: 0.1.1
+doi: 10.5281/zenodo.5245096
+date-released: 2021-08-24
