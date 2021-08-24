@@ -82,4 +82,4 @@ You can set the following parameters in `scripts\parameters.txt`:
 
 ## When using pydistinto for research, how can it be references?
 
-You can either cite the software itself
+Please cite the software itself.
