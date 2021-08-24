@@ -12,4 +12,4 @@ To facilitate the use of relevant measures that can be used for contrastive text
 
 ## Requirements and installation
 
-* Requirements: Python 3 with pandas, numpy, sklearn, pygal, treetaggerwrapper (and TreeTagger)
+* Requirements: Python 3 with pandas, numpy, sklearn, pygal, spacy
