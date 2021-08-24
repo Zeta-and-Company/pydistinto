@@ -24,8 +24,8 @@ Requirements:
 ## How to run pydistinto?
 
 - Adapt the parameters in `scripts\parameters.txt` to you needs
-- Run `preprocessing_before_running_pydistinto.py` from the Terminal first
-- Run `run_pydistinto_beginners.py`
+- First, run `preprocessing_before_running_pydistinto.py` from the Terminal
+- After that, run `run_pydistinto_beginners.py` from the Terminal
 
 
 ## What is necessary to run the analyses?
@@ -57,27 +57,27 @@ Currently, the following standard processes are supported:
 
 ## What parameters are there to control pydistinto behavior?
 
-You can set the following parameters:
+You can set the following parameters in `scripts\parameters.txt`:
 
-- corpus : directory of your plain text data
-- workdir : directory for saving results
-- language : Catalan, Chinese, Danish, Dutch, English, French, German, Greek, Italian, Japanese, Lithuanian, Macedonian, Norwegian Bokmål, Polish, Portuguese, Romanian, Russian, Spanish (see. [Spacy](https://spacy.io/usage) and install the trained pipelines in order to run POS-Tagging. “Multi-language” is not supported)
-- segmentlength : a number, e. g. 5000; or “text” which means no segmentation
-- forms : lemmata
-- pos : all
-- contrast : detective
-- target_corpus : yes
-- comparison_corpus : no
-- no_of_features : a number, e. g. 20
-- measures : 
-	- zeta_sd0 : Zeta
-	- rrf_dr0 : ratio of relative frequencies
-	- eta_sg0 : Gris’ DP based measure
-	- welsh : Welch's t-test
-	- ranksum : Wilcoxon rank-sum test
-	- KL_Divergence : Kullback-Leibler divergence
-	- chi_square : Chi-Squared Test
-	- LLR : Log-Likelihood-Ratio test
+- `corpus`: directory of your plain text data
+- `workdir`: directory for saving results
+- `language`: Catalan, Chinese, Danish, Dutch, English, French, German, Greek, Italian, Japanese, Lithuanian, Macedonian, Norwegian Bokmål, Polish, Portuguese, Romanian, Russian, Spanish (see. [Spacy](https://spacy.io/usage) and install the trained pipelines in order to run POS-Tagging. “Multi-language” is not supported)
+- `segmentlength`: a number, e. g. 5000; or “text” which means no segmentation
+- `forms`: lemmata
+- `pos`: all
+- `contrast`: detective
+- `target_corpus`: yes
+- `comparison_corpus`: no
+- `no_of_features`: a number, e. g. 20
+- `measures`: 
+	- `zeta_sd0`: Zeta
+	- `rrf_dr0`: ratio of relative frequencies
+	- `eta_sg0`: Gris’ DP based measure
+	- `welsh`: Welch's t-test
+	- `ranksum`: Wilcoxon rank-sum test
+	- `KL_Divergence`: Kullback-Leibler divergence
+	- `chi_square`: Chi-Squared Test
+	- `LLR`: Log-Likelihood-Ratio test
 
 
 ## When using pydistinto for research, how can it be references?
