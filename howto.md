@@ -33,7 +33,7 @@ Requirements:
 The script expects the following as input. See the `data` folder for an example. 
 
 - A folder with plain text files. They need to be in UTF-8 encoding. The files should all be in one folder (here, the `corpus`folder). 
-- A metadata file called "metadata.csv" with category information about each file, identified through the column header called "idno" and which contains the filenames (without the extension). The metadata file should be a CSV file, with the "\t" (tab character) used as the separator character. This metadata file should be at the same level as the `corpus` folder (here, it is in the `sampledata` folder)
+- A metadata file called "metadata.csv" with category information about each file, identified through the column header called "idno" and which contains the filenames (without the extension). The metadata file should be a CSV file, with the "\t" (tab character) used as the separator character. This metadata file should be at the same level as the `corpus` folder (here, it is in the `data` folder)
 - A file with stopwords, called `stoplist.txt`, with one stopword per line. (This can be empty but should be there.)
 
 
@@ -61,7 +61,7 @@ You can set the following parameters in `scripts\parameters.txt`:
 
 - `corpus`: directory of your plain text data
 - `workdir`: directory for saving results
-- `language`: Catalan, Chinese, Danish, Dutch, English, French, German, Greek, Italian, Japanese, Lithuanian, Macedonian, Norwegian Bokmål, Polish, Portuguese, Romanian, Russian, Spanish (see. [Spacy](https://spacy.io/usage) and install the trained pipelines in order to run POS-Tagging. “Multi-language” is not supported)
+- `language`: Catalan, Chinese, Danish, Dutch, English, French, German, Greek, Italian, Japanese, Lithuanian, Macedonian, Norwegian Bokmål, Polish, Portuguese, Romanian, Russian, Spanish (see [Spacy](https://spacy.io/usage) and install the trained pipelines in order to run POS-Tagging. “Multi-language” is not supported)
 - `segmentlength`: a number, e. g. 5000; or “text” which means no segmentation
 - `forms`: lemmata
 - `pos`: all
