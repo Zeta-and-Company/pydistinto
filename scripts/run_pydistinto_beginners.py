@@ -43,7 +43,7 @@ for line in parameters_lines:
 # You need to adapt these
 corpus = parameters['corpus']
 workdir = parameters['workdir']
-dtmfolder = join(workdir, "output", corpus, "dtms", "")
+dtmfolder = join(corpus, "dtms", "")
 
 # It is recommended to name your files and folders accordingly
 datadir = abspath(os.path.join(corpus, os.pardir))
@@ -52,7 +52,7 @@ metadatafile = join(datadir, "metadata.csv")
 stoplistfile = join(datadir, "stoplist.txt")
 
 # It is recommended not to change these
-outputdir = join(workdir, "output")
+outputdir = join(workdir, "output_" + os.path.basename(datadir))
 taggedfolder = join(outputdir, "tagged", "")
 segmentfolder = join(outputdir, "segments1000", "")
 datafolder = join(outputdir, "results", "")
