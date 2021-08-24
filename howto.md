@@ -69,15 +69,15 @@ You can set the following parameters in `scripts\parameters.txt`:
 - `target_corpus`: yes
 - `comparison_corpus`: no
 - `no_of_features`: a number, e. g. 20
-- `measures`: 
-	- `zeta_sd0`: Zeta
-	- `rrf_dr0`: ratio of relative frequencies
-	- `eta_sg0`: Gris’ DP based measure
-	- `welsh`: Welch's t-test
-	- `ranksum`: Wilcoxon rank-sum test
-	- `KL_Divergence`: Kullback-Leibler divergence
-	- `chi_square`: Chi-Squared Test
-	- `LLR`: Log-Likelihood-Ratio test
+- `measures`: following measures are implemented:
+	- zeta_sd0: Zeta
+	- rrf_dr0: ratio of relative frequencies
+	- eta_sg0: Gris’ DP based measure
+	- welsh: Welch's t-test
+	- ranksum: Wilcoxon rank-sum test
+	- KL_Divergence: Kullback-Leibler divergence
+	- chi_square: Chi-Squared Test
+	- LLR: Log-Likelihood-Ratio test
 
 
 ## When using pydistinto for research, how can it be references?
