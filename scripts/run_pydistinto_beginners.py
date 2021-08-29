@@ -96,7 +96,7 @@ separator = "\t"
 contrast = [parameters['contrast'], parameters['target_corpus'], parameters['comparison_corpus']] # example for roman20 [blanche, policier, scifi, sentimental]
 #contrast = ["random", "two", "one"] # for splitting groups randomly
 logaddition= 0.1 # has effect on log calculation.
-calculate_simple.main(datafolder, dtmfolder, metadatafile, separator, contrast, logaddition, resultsfolder, segmentlength, featuretype, absolutefreqs, relativefreqs, binaryfreqs)
+calculate_simple.main(datafolder, dtmfolder, metadatafile, separator, contrast, logaddition, resultsfolder, segmentlength, featuretype, absolutefreqs, relativefreqs, binaryfreqs, tf_frame)
 
 
 

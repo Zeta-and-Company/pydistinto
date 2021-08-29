@@ -54,7 +54,7 @@ def make_idlists(metadatafile, separator, contrast):
         return idlists
 
 
-def filter_dtm(dtmfolder, parameterstring, idlists, absolutefreqs, relativefreqs, binaryfreqs):
+def filter_dtm(dtmfolder, parameterstring, idlists, absolutefreqs, relativefreqs, binaryfreqs, tf_frame):
     """
     This function splits the DTM in two parts.
     Each part consists of the segments corresponding to one partition.
@@ -76,6 +76,8 @@ def filter_dtm(dtmfolder, parameterstring, idlists, absolutefreqs, relativefreqs
     relative2 = relative.T.filter(regex=ids2, axis=1)
     absolute1 = absolute.T.filter(regex=ids1, axis=1)
     absolute2 = absolute.T.filter(regex=ids2, axis=1)
+    tf_frame1 = tf_frame.T.filter(regex=ids1, axis=1)
+    tf_frame2 = tf_frame.T.filter(regex=ids2, axis=1)
     print("\nbinary1\n", binary1.head())
     """
     with open(dtmfile, "r", encoding='utf-8') as infile:
@@ -97,10 +99,10 @@ def filter_dtm(dtmfolder, parameterstring, idlists, absolutefreqs, relativefreqs
         absolute1 = absolute.T.filter(regex=ids1, axis=1)
         absolute2 = absolute.T.filter(regex=ids2, axis=1)
     """
-    return binary1, binary2, relative1, relative2, absolute1, absolute2
+    return binary1, binary2, relative1, relative2, absolute1, absolute2, tf_frame1, tf_frame2
     
     
-def get_indicators(binary1, binary2, relative1, relative2):
+def get_indicators(binary1, binary2, relative1, relative2, tf_frame1, tf_frame2):
     """
     Indicators are the mean relative frequency or the document proportions,
     depending on the method chosen.
@@ -113,11 +115,15 @@ def get_indicators(binary1, binary2, relative1, relative2):
     relfreqs1 = pd.Series(relfreqs1, name="relfreqs1")
     relfreqs2 = np.mean(relative2, axis=1)*1000
     relfreqs2 = pd.Series(relfreqs2, name="relfreqs2")
+    tf_framefreqs1 = np.mean(tf_frame1, axis=1)
+    tf_framefreqs2 = np.mean(tf_frame2, axis=1)
     print("\ndocprops1\n", docprops1.head(20))
     print("\ndocprops2\n", docprops2.head(20))
     print("\nrelfreqs1\n", relfreqs1.head())
     print("\nrelfreqs2\n", relfreqs2.head())
-    return docprops1, docprops2, relfreqs1, relfreqs2
+    print("\tf_framefreqs2\n", tf_framefreqs2.head())
+    print("\tf_framefreqs1\n", tf_framefreqs1.head())
+    return docprops1, docprops2, relfreqs1, relfreqs2, tf_framefreqs1, tf_framefreqs2
 
 
 def Deviation_of_proportions (absolute, segmentlength):
@@ -138,7 +144,7 @@ def Deviation_of_proportions (absolute, segmentlength):
     return devprops
 
 
-def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relfreqs2, logaddition, segmentlength, idlists):
+def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relfreqs2, logaddition, segmentlength, idlists, tf_framefreqs1, tf_framefreqs2):
     """
     This function implements several distinctive measures.
     """
@@ -215,7 +221,16 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
     LLR_value = scaler.fit_transform(LLR_value.values.reshape(-1, 1))
     LLR_value = [value[0] for value in LLR_value]
     LLR_value = pd.Series(data=LLR_value, index=LLR_index)
-    return zeta_sd0, rrf_dr0, eta_sg0, welsh_t_value, ranksumtest_value, KLD_value, chi_square_value, LLR_value
+    
+    print("---calculating scores; 9/X, 'Tf-idf weighted absolutefreqs absbased distinctiveness'---")
+    tf_idf = tf_framefreqs1 - tf_framefreqs2
+    tf_idf_index = tf_idf.index
+    tf_idf = scaler.fit_transform(tf_idf.values.reshape(-1, 1))
+    tf_idf = [value[0] for value in tf_idf]
+    tf_idf = pd.Series(tf_idf, index=tf_idf_index)
+    # Prepare scaler to rescale variants to range of sd0 (original Zeta)
+    
+    return zeta_sd0, rrf_dr0, eta_sg0, welsh_t_value, ranksumtest_value, KLD_value, chi_square_value, LLR_value, tf_idf
 
 
 def get_meanrelfreqs(dtmfolder, parameterstring, relativefreqs):
@@ -238,7 +253,7 @@ def get_meanrelfreqs(dtmfolder, parameterstring, relativefreqs):
         return meanrelfreqs
     """
 
-def combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, zeta_sd0, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR):
+def combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, zeta_sd0, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR, tf_idf):
     #print(len(docprops1), len(docprops2), len(relfreqs1), len(relfreqs2), len(devprops1), len(devprops2), len(meanrelfreqs), len(sd0), len(sd2), len(sr0), len(sr2), len(sg0), len(sg2), len(dd0), len(dd2), len(dr0), len(dr2), len(dg0), len(dg2))
     #print(type(docprops1), type(docprops2), type(relfreqs1), type(relfreqs2), type(devprops1), type(devprops2), type(meanrelfreqs), type(sd0), type(sd2), type(sr0), type(sr2), type(sg0), type(sg2), type(dd0), type(dd2), type(dr0), type(dr2), type(dg0), type(dg2))
     results = pd.DataFrame({
@@ -254,7 +269,8 @@ def combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, ze
     "ranksum" : ranksum,
     "KL_Divergence": KL_Divergence,
     "chi_square": chi_square,
-    "LLR": LLR})
+    "LLR": LLR,
+    "tf_idf": tf_idf})
     #print(results.head())
     #print(results.columns.tolist())
     results = results[[
@@ -270,7 +286,8 @@ def combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, ze
     "ranksum",
     "KL_Divergence",
     "chi_square",
-    "LLR"]]
+    "LLR",
+    "tf_idf"]]
     results.sort_values(by="zeta_sd0", ascending=False, inplace=True)
     print("\nresults-head\n", results.head(10), "\nresults-tail\n", results.tail(10))
     return results
@@ -286,7 +303,7 @@ def save_results(results, resultsfile):
 # =================================
 
 
-def main(datafolder, dtmfolder, metadatafile, separator, contrast, logaddition, resultsfolder, segmentlength, featuretype, absolutefreqs, relativefreqs, binaryfreqs):
+def main(datafolder, dtmfolder, metadatafile, separator, contrast, logaddition, resultsfolder, segmentlength, featuretype, absolutefreqs, relativefreqs, binaryfreqs, tf_frame):
     print("--calculate")
     if not os.path.exists(resultsfolder):
         os.makedirs(resultsfolder)
@@ -297,10 +314,10 @@ def main(datafolder, dtmfolder, metadatafile, separator, contrast, logaddition, 
     resultsfile = resultsfolder + "results_" + parameterstring +"_"+ contraststring +".csv"
     idlists = make_idlists(metadatafile, separator, contrast)
     #print(idlists)
-    binary1, binary2, relative1, relative2, absolute1, absolute2 = filter_dtm(dtmfolder, parameterstring, idlists, absolutefreqs, relativefreqs, binaryfreqs)
+    binary1, binary2, relative1, relative2, absolute1, absolute2, tf_frame1, tf_frame2 = filter_dtm(dtmfolder, parameterstring, idlists, absolutefreqs, relativefreqs, binaryfreqs, tf_frame)
     #print(binary1)
-    docprops1, docprops2, relfreqs1, relfreqs2 = get_indicators(binary1, binary2, relative1, relative2)
-    zeta_sd0, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR = calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relfreqs2, logaddition, segmentlength, idlists)
+    docprops1, docprops2, relfreqs1, relfreqs2, tf_framefreqs1, tf_framefreqs2 = get_indicators(binary1, binary2, relative1, relative2, tf_frame1, tf_frame2)
+    zeta_sd0, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR, tf_idf = calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relfreqs2, logaddition, segmentlength, idlists, tf_framefreqs1, tf_framefreqs2)
     meanrelfreqs = get_meanrelfreqs(dtmfolder, parameterstring, relativefreqs)
-    results = combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, zeta_sd0, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR)
+    results = combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, zeta_sd0, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR, tf_idf)
     save_results(results, resultsfile)
