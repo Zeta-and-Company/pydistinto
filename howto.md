@@ -78,6 +78,7 @@ You can set the following parameters in `scripts\parameters.txt`:
 	- KL_Divergence: Kullback-Leibler divergence
 	- chi_square: Chi-Squared Test
 	- LLR: Log-Likelihood-Ratio test
+	- tf-idf: tf-idf weighted absolutefrequencies based measure
 
 
 ## When using pydistinto for research, how can it be references?
