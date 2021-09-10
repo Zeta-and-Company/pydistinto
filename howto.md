@@ -83,4 +83,4 @@ You can set the following parameters in `scripts\parameters.txt`:
 
 ## When using pydistinto for research, how can it be references?
 
-Du, K., Dudar, J., & Schöch, C. (2021). pydistinto - a Python implementation of different measures of distinctiveness for contrastive text analysis (Version 0.1.1) [Computer software]. https://doi.org/10.5281/zenodo.5245096
+Du, Keli; Dudar, Julia; Schöch, Christof (2021). pydistinto - a Python implementation of different measures of distinctiveness for contrastive text analysis (Version 0.1.1) [Computer software]. https://doi.org/10.5281/zenodo.5245096
