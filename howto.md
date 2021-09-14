@@ -13,7 +13,7 @@ This document contains some notes intended to help people use pydistinto.
 Requirements:
 
 - Python 3
-- Packages pandas, numpy, spacy and pygal
+- Packages pandas, sklearn, numpy, spacy, pygal and seaborn
 
 
 ## How to install pydistinto?
@@ -24,8 +24,8 @@ Requirements:
 ## How to run pydistinto?
 
 - Adapt the parameters in `scripts\parameters.txt` to you needs
-- First, run `preprocessing_before_running_pydistinto.py` from the Terminal
-- After that, run `run_pydistinto_beginners.py` from the Terminal
+- First, run `preprocessing_before_running_pydistinto.py` from the Terminal or from an IDE
+- After that, run `run_pydistinto_beginners.py` from the Terminal or from an IDE
 
 
 ## What is necessary to run the analyses?
