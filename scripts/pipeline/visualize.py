@@ -125,7 +125,13 @@ def zetabarchart(segmentlength, featuretype, contrast, measures, numfeatures, dr
             os.makedirs(plotfolder)
         # Get the data and plot it
         zetadata = get_zetadata(resultsfile, measure, numfeatures, droplist)
-        make_barchart(zetadata, zetaplotfile, parameterstring, contraststring, measure, numfeatures)
+        try:
+            make_barchart(zetadata, zetaplotfile, parameterstring, contraststring, measure, numfeatures)
+        except:
+            print("Something went wrong while vasualizing " + measure)
+            with open(zetaplotfile, 'w', encoding='utf-8') as fout:
+                fout.write("Something went wrong while vasualizing " + measure)
+                fout.close()
         html_file.write('      <object type="image/svg+xml" data="' + zetaplotfile + '"></object>' + '\n' )
     
     html_file.write("</body></html>")

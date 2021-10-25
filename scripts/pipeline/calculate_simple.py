@@ -149,87 +149,121 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
     This function implements several distinctive measures.
     """
     print("---calculating scores: 1/X, 'original Zeta'---")
-    # Define logaddition and division-by-zero avoidance addition
-    logaddition = logaddition+1
-    divaddition = 0.00000000001
-    # == Calculate subtraction variants ==
-    # sd0 - Subtraction, docprops, untransformed a.k.a. "original Zeta"
-    zeta_sd0 = docprops1 - docprops2
-    zeta_sd0 = pd.Series(zeta_sd0, name="zeta_sd0")
-    #print("\nsd0\n", zeta_sd0.head(10))
-    # Prepare scaler to rescale variants to range of sd0 (original Zeta)
-    scaler = prp.MinMaxScaler(feature_range=(min(zeta_sd0),max(zeta_sd0)))
-    
+    try:
+        # Define logaddition and division-by-zero avoidance addition
+        logaddition = logaddition+1
+        divaddition = 0.00000000001
+        # == Calculate subtraction variants ==
+        # sd0 - Subtraction, docprops, untransformed a.k.a. "original Zeta"
+        zeta_sd0 = docprops1 - docprops2
+        zeta_sd0 = pd.Series(zeta_sd0, name="zeta_sd0")
+        #print("\nsd0\n", zeta_sd0.head(10))
+        # Prepare scaler to rescale variants to range of sd0 (original Zeta)
+        scaler = prp.MinMaxScaler(feature_range=(min(zeta_sd0),max(zeta_sd0)))
+    except:
+        print("Something went wrong while calculating 'original Zeta'")
+        zeta_sd0 = pd.Series()
+        scaler = prp.MinMaxScaler(feature_range=(-1,1))
+        
     print("---calculating scores: 2/X, 'ratio of relative frequencies'---")
-    rrf_dr0 = (relfreqs1 + divaddition) / (relfreqs2 + divaddition)
-    rrf_dr0 = pd.Series(rrf_dr0, name="rrf_dr0")
-    rrf_dr0_index = rrf_dr0.index
-    rrf_dr0 = scaler.fit_transform(rrf_dr0.values.reshape(-1, 1))
-    rrf_dr0 = [value[0] for value in rrf_dr0]
-    rrf_dr0 = pd.Series(data=rrf_dr0, index=rrf_dr0_index)
-    
+    try:
+        rrf_dr0 = (relfreqs1 + divaddition) / (relfreqs2 + divaddition)
+        rrf_dr0 = pd.Series(rrf_dr0, name="rrf_dr0")
+        rrf_dr0_index = rrf_dr0.index
+        rrf_dr0 = scaler.fit_transform(rrf_dr0.values.reshape(-1, 1))
+        rrf_dr0 = [value[0] for value in rrf_dr0]
+        rrf_dr0 = pd.Series(data=rrf_dr0, index=rrf_dr0_index)
+    except:
+        print("Something went wrong while calculating 'ratio of relative frequencies'")
+        rrf_dr0 = pd.Series()
+        
     print("---calculating scores: 3/X, 'Eta, deviation of proportions based distinctiveness'---")
     # == Calculate subtraction variants ==
     # sg0 - Subtraction, devprops, untransformed a.k.a. "dpd", ("g" for Gries)
-    devprops1 = Deviation_of_proportions(absolute1, segmentlength)
-    devprops2 = Deviation_of_proportions(absolute2, segmentlength)
-    eta_sg0 = (devprops1 - devprops2) * -1
-    eta_sg0 = pd.Series(eta_sg0, name="eta_sg0")
-    eta_sg0_index = eta_sg0.index
-    eta_sg0 = scaler.fit_transform(eta_sg0.values.reshape(-1, 1))
-    eta_sg0 = [value[0] for value in eta_sg0]
-    eta_sg0 = pd.Series(data=eta_sg0, index=eta_sg0_index)
-
+    try:
+        devprops1 = Deviation_of_proportions(absolute1, segmentlength)
+        devprops2 = Deviation_of_proportions(absolute2, segmentlength)
+        eta_sg0 = (devprops1 - devprops2) * -1
+        eta_sg0 = pd.Series(eta_sg0, name="eta_sg0")
+        eta_sg0_index = eta_sg0.index
+        eta_sg0 = scaler.fit_transform(eta_sg0.values.reshape(-1, 1))
+        eta_sg0 = [value[0] for value in eta_sg0]
+        eta_sg0 = pd.Series(data=eta_sg0, index=eta_sg0_index)
+    except:
+        print("Something went wrong while calculating 'Eta, deviation of proportions based distinctiveness'")
+        eta_sg0 = pd.Series()
+        
     #Calculate Welshs-t-test
     print("---calculating scores: 4/X, 'Welshs-t-test'---")
-    welsh_t_value = welsh_t.main(absolute1, absolute2)
-    welsh_t_index = welsh_t_value.index
-    welsh_t_value = scaler.fit_transform(welsh_t_value.values.reshape(-1, 1))
-    welsh_t_value = [value[0] for value in welsh_t_value]
-    welsh_t_value = pd.Series(data=welsh_t_value, index=welsh_t_index)
-    
+    try:
+        welsh_t_value = welsh_t.main(absolute1, absolute2)
+        welsh_t_index = welsh_t_value.index
+        welsh_t_value = scaler.fit_transform(welsh_t_value.values.reshape(-1, 1))
+        welsh_t_value = [value[0] for value in welsh_t_value]
+        welsh_t_value = pd.Series(data=welsh_t_value, index=welsh_t_index)
+    except:
+        print("Something went wrong while calculating 'Welshs-t-test'")
+        welsh_t_value = pd.Series()    
     
     #Calculate Wilcoxon rank-sum test
     print("---calculating scores: 5/X, 'Wilcoxon rank-sum test'---")
-    ranksumtest_value = wilcoxon_ranksum.main(absolute1, absolute2)
-    ranksumtest_index = ranksumtest_value.index
-    ranksumtest_value = scaler.fit_transform(ranksumtest_value.values.reshape(-1, 1))
-    ranksumtest_value = [value[0] for value in ranksumtest_value]
-    ranksumtest_value = pd.Series(data=ranksumtest_value, index=ranksumtest_index)
-    
+    try:
+        ranksumtest_value = wilcoxon_ranksum.main(absolute1, absolute2)
+        ranksumtest_index = ranksumtest_value.index
+        ranksumtest_value = scaler.fit_transform(ranksumtest_value.values.reshape(-1, 1))
+        ranksumtest_value = [value[0] for value in ranksumtest_value]
+        ranksumtest_value = pd.Series(data=ranksumtest_value, index=ranksumtest_index)
+    except:
+        print("Something went wrong while calculating 'Wilcoxon rank-sum test'")
+        ranksumtest_value = pd.Series()
+        
     #Calculate Kullback-Leibler Divergence
     print("---calculating scores: 6/X, 'Kullback-Leibler Divergence'---")
-    KLD_value = KL_Divergence.main(relfreqs1, relfreqs2, 2, logaddition)
-    KLD_index = KLD_value.index
-    KLD_value = scaler.fit_transform(KLD_value.values.reshape(-1, 1))
-    KLD_value = [value[0] for value in KLD_value]
-    KLD_value = pd.Series(data=KLD_value, index=KLD_index)
-
-
+    try:
+        KLD_value = KL_Divergence.main(relfreqs1, relfreqs2, 2, logaddition)
+        KLD_index = KLD_value.index
+        KLD_value = scaler.fit_transform(KLD_value.values.reshape(-1, 1))
+        KLD_value = [value[0] for value in KLD_value]
+        KLD_value = pd.Series(data=KLD_value, index=KLD_index)
+    except:
+        print("Something went wrong while calculating 'Kullback-Leibler Divergence'")
+        KLD_value = pd.Series()
+        
     #Calculate Chi-squared test
     print("---calculating scores: 7/X, 'Chi-squared test'---")
-    chi_square_value = chi_square.main(absolute1, absolute2)
-    chi_square_index = chi_square_value.index
-    chi_square_value = scaler.fit_transform(chi_square_value.values.reshape(-1, 1))
-    chi_square_value = [value[0] for value in chi_square_value]
-    chi_square_value = pd.Series(data=chi_square_value, index=chi_square_index)
-    
+    try:
+        chi_square_value = chi_square.main(absolute1, absolute2)
+        chi_square_index = chi_square_value.index
+        chi_square_value = scaler.fit_transform(chi_square_value.values.reshape(-1, 1))
+        chi_square_value = [value[0] for value in chi_square_value]
+        chi_square_value = pd.Series(data=chi_square_value, index=chi_square_index)
+    except:
+        print("Something went wrong while calculating 'Chi-squared test'")
+        chi_square_value = pd.Series()
+        
     #Calculate Log-likelihood-Ratio test
     print("---calculating scores: 8/X, 'Log-likelihood-Ratio test'---")
-    LLR_value = LLR.main(absolute1, absolute2)
-    LLR_index = LLR_value.index
-    LLR_value = scaler.fit_transform(LLR_value.values.reshape(-1, 1))
-    LLR_value = [value[0] for value in LLR_value]
-    LLR_value = pd.Series(data=LLR_value, index=LLR_index)
-    
+    try:
+        LLR_value = LLR.main(absolute1, absolute2)
+        LLR_index = LLR_value.index
+        LLR_value = scaler.fit_transform(LLR_value.values.reshape(-1, 1))
+        LLR_value = [value[0] for value in LLR_value]
+        LLR_value = pd.Series(data=LLR_value, index=LLR_index)
+    except:
+        print("Something went wrong while calculating 'Log-likelihood-Ratio test'")
+        LLR_value = pd.Series()
+        
     print("---calculating scores; 9/X, 'Tf-idf weighted absolutefreqs absbased distinctiveness'---")
-    tf_idf = tf_framefreqs1 - tf_framefreqs2
-    tf_idf_index = tf_idf.index
-    tf_idf = scaler.fit_transform(tf_idf.values.reshape(-1, 1))
-    tf_idf = [value[0] for value in tf_idf]
-    tf_idf = pd.Series(tf_idf, index=tf_idf_index)
-    # Prepare scaler to rescale variants to range of sd0 (original Zeta)
-    
+    try:
+        tf_idf = tf_framefreqs1 - tf_framefreqs2
+        tf_idf_index = tf_idf.index
+        tf_idf = scaler.fit_transform(tf_idf.values.reshape(-1, 1))
+        tf_idf = [value[0] for value in tf_idf]
+        tf_idf = pd.Series(tf_idf, index=tf_idf_index)
+    except:
+        print("Something went wrong while calculating 'Tf-idf weighted absolutefreqs absbased distinctiveness'")
+        tf_idf = pd.Series()
+        
     return zeta_sd0, rrf_dr0, eta_sg0, welsh_t_value, ranksumtest_value, KLD_value, chi_square_value, LLR_value, tf_idf
 
 

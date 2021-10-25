@@ -32,7 +32,8 @@ parameters_lines = open(r'parameters.txt', 'r', encoding='utf-8').read().split('
 parameters = {}
 for line in parameters_lines:
     line_split = line.split('=')
-    parameters[line_split[0]] = line_split[1]
+    if len(line_split) == 2:
+        parameters[line_split[0]] = line_split[1]
 
 # =================================
 # Parameters: files and folders
