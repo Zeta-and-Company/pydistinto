@@ -148,12 +148,11 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
     """
     This function implements several distinctive measures.
     """
-    print("---calculating scores: 1/X, 'original Zeta'---")
+    # Define logaddition and division-by-zero avoidance addition
+    logaddition = logaddition+1
+    divaddition = 0.00000000001
+    print("---calculating scores: 1/10, 'original Zeta'---")
     try:
-        # Define logaddition and division-by-zero avoidance addition
-        logaddition = logaddition+1
-        divaddition = 0.00000000001
-        # == Calculate subtraction variants ==
         # sd0 - Subtraction, docprops, untransformed a.k.a. "original Zeta"
         zeta_sd0 = docprops1 - docprops2
         zeta_sd0 = pd.Series(zeta_sd0, name="zeta_sd0")
@@ -164,8 +163,20 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         print("Something went wrong while calculating 'original Zeta'")
         zeta_sd0 = pd.Series()
         scaler = prp.MinMaxScaler(feature_range=(-1,1))
+    
+    print("---calculating scores: 2/10, 'Zeta_log2-transformed'---")
+    try:
+        # sd2 - Subtraction, docprops, log2-transformed
+        zeta_sd2 = np.log2(docprops1 + logaddition) - np.log2(docprops2 + logaddition)
+        zeta_sd2 = pd.Series(zeta_sd2, name="zeta_sd2")
+        zeta_sd2_index = zeta_sd2.index
+        zeta_sd2 = scaler.fit_transform(zeta_sd2.values.reshape(-1, 1))
+        zeta_sd2 = [value[0] for value in zeta_sd2]
+        zeta_sd2 = pd.Series(data=zeta_sd2, index=zeta_sd2_index)
+    except:
+        print("Something went wrong while calculating 'Zeta_log2-transformed'")
         
-    print("---calculating scores: 2/X, 'ratio of relative frequencies'---")
+    print("---calculating scores: 3/10, 'ratio of relative frequencies'---")
     try:
         rrf_dr0 = (relfreqs1 + divaddition) / (relfreqs2 + divaddition)
         rrf_dr0 = pd.Series(rrf_dr0, name="rrf_dr0")
@@ -177,7 +188,7 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         print("Something went wrong while calculating 'ratio of relative frequencies'")
         rrf_dr0 = pd.Series()
         
-    print("---calculating scores: 3/X, 'Eta, deviation of proportions based distinctiveness'---")
+    print("---calculating scores: 4/10, 'Eta, deviation of proportions based distinctiveness'---")
     # == Calculate subtraction variants ==
     # sg0 - Subtraction, devprops, untransformed a.k.a. "dpd", ("g" for Gries)
     try:
@@ -194,7 +205,7 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         eta_sg0 = pd.Series()
         
     #Calculate Welshs-t-test
-    print("---calculating scores: 4/X, 'Welshs-t-test'---")
+    print("---calculating scores: 5/10, 'Welshs-t-test'---")
     try:
         welsh_t_value = welsh_t.main(absolute1, absolute2)
         welsh_t_index = welsh_t_value.index
@@ -206,7 +217,7 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         welsh_t_value = pd.Series()    
     
     #Calculate Wilcoxon rank-sum test
-    print("---calculating scores: 5/X, 'Wilcoxon rank-sum test'---")
+    print("---calculating scores: 6/10, 'Wilcoxon rank-sum test'---")
     try:
         ranksumtest_value = wilcoxon_ranksum.main(absolute1, absolute2)
         ranksumtest_index = ranksumtest_value.index
@@ -218,7 +229,7 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         ranksumtest_value = pd.Series()
         
     #Calculate Kullback-Leibler Divergence
-    print("---calculating scores: 6/X, 'Kullback-Leibler Divergence'---")
+    print("---calculating scores: 7/10, 'Kullback-Leibler Divergence'---")
     try:
         KLD_value = KL_Divergence.main(relfreqs1, relfreqs2, 2, logaddition)
         KLD_index = KLD_value.index
@@ -230,7 +241,7 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         KLD_value = pd.Series()
         
     #Calculate Chi-squared test
-    print("---calculating scores: 7/X, 'Chi-squared test'---")
+    print("---calculating scores: 8/10, 'Chi-squared test'---")
     try:
         chi_square_value = chi_square.main(absolute1, absolute2)
         chi_square_index = chi_square_value.index
@@ -242,7 +253,7 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         chi_square_value = pd.Series()
         
     #Calculate Log-likelihood-Ratio test
-    print("---calculating scores: 8/X, 'Log-likelihood-Ratio test'---")
+    print("---calculating scores: 9/10, 'Log-likelihood-Ratio test'---")
     try:
         LLR_value = LLR.main(absolute1, absolute2)
         LLR_index = LLR_value.index
@@ -253,7 +264,7 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         print("Something went wrong while calculating 'Log-likelihood-Ratio test'")
         LLR_value = pd.Series()
         
-    print("---calculating scores; 9/X, 'Tf-idf weighted absolutefreqs absbased distinctiveness'---")
+    print("---calculating scores; 10/10, 'Tf-idf weighted absolutefreqs absbased distinctiveness'---")
     try:
         tf_idf = tf_framefreqs1 - tf_framefreqs2
         tf_idf_index = tf_idf.index
@@ -264,7 +275,7 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         print("Something went wrong while calculating 'Tf-idf weighted absolutefreqs absbased distinctiveness'")
         tf_idf = pd.Series()
         
-    return zeta_sd0, rrf_dr0, eta_sg0, welsh_t_value, ranksumtest_value, KLD_value, chi_square_value, LLR_value, tf_idf
+    return zeta_sd0, zeta_sd2, rrf_dr0, eta_sg0, welsh_t_value, ranksumtest_value, KLD_value, chi_square_value, LLR_value, tf_idf
 
 
 def get_meanrelfreqs(dtmfolder, parameterstring, relativefreqs):
@@ -287,7 +298,7 @@ def get_meanrelfreqs(dtmfolder, parameterstring, relativefreqs):
         return meanrelfreqs
     """
 
-def combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, zeta_sd0, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR, tf_idf):
+def combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, zeta_sd0, zeta_sd2, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR, tf_idf):
     #print(len(docprops1), len(docprops2), len(relfreqs1), len(relfreqs2), len(devprops1), len(devprops2), len(meanrelfreqs), len(sd0), len(sd2), len(sr0), len(sr2), len(sg0), len(sg2), len(dd0), len(dd2), len(dr0), len(dr2), len(dg0), len(dg2))
     #print(type(docprops1), type(docprops2), type(relfreqs1), type(relfreqs2), type(devprops1), type(devprops2), type(meanrelfreqs), type(sd0), type(sd2), type(sr0), type(sr2), type(sg0), type(sg2), type(dd0), type(dd2), type(dr0), type(dr2), type(dg0), type(dg2))
     results = pd.DataFrame({
@@ -297,6 +308,7 @@ def combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, ze
     "relfreqs2" : relfreqs2,
     "meanrelfreqs" :meanrelfreqs,
     "zeta_sd0" : zeta_sd0,
+    "zeta_sd2" : zeta_sd2,
     "rrf_dr0" : rrf_dr0,
     "eta_sg0" : eta_sg0,
     "welsh" : welsh,
@@ -314,6 +326,7 @@ def combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, ze
     "relfreqs2",
     "meanrelfreqs",
     "zeta_sd0",
+    "zeta_sd2",
     "rrf_dr0",
     "eta_sg0",
     "welsh",
@@ -351,7 +364,7 @@ def main(datafolder, dtmfolder, metadatafile, separator, contrast, logaddition, 
     binary1, binary2, relative1, relative2, absolute1, absolute2, tf_frame1, tf_frame2 = filter_dtm(dtmfolder, parameterstring, idlists, absolutefreqs, relativefreqs, binaryfreqs, tf_frame)
     #print(binary1)
     docprops1, docprops2, relfreqs1, relfreqs2, tf_framefreqs1, tf_framefreqs2 = get_indicators(binary1, binary2, relative1, relative2, tf_frame1, tf_frame2)
-    zeta_sd0, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR, tf_idf = calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relfreqs2, logaddition, segmentlength, idlists, tf_framefreqs1, tf_framefreqs2)
+    zeta_sd0, zeta_sd2, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR, tf_idf = calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relfreqs2, logaddition, segmentlength, idlists, tf_framefreqs1, tf_framefreqs2)
     meanrelfreqs = get_meanrelfreqs(dtmfolder, parameterstring, relativefreqs)
-    results = combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, zeta_sd0, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR, tf_idf)
+    results = combine_results(docprops1, docprops2, relfreqs1, relfreqs2, meanrelfreqs, zeta_sd0, zeta_sd2, rrf_dr0, eta_sg0, welsh, ranksum, KL_Divergence, chi_square, LLR, tf_idf)
     save_results(results, resultsfile)
