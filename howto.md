@@ -13,7 +13,7 @@ This document contains some notes intended to help people use pydistinto.
 Requirements:
 
 - Python 3
-- Packages pandas, numpy, spacy and pygal
+- Packages pandas, sklearn, numpy, spacy, pygal and seaborn
 
 
 ## How to install pydistinto?
@@ -24,8 +24,8 @@ Requirements:
 ## How to run pydistinto?
 
 - Adapt the parameters in `scripts\parameters.txt` to you needs
-- First, run `preprocessing_before_running_pydistinto.py` from the Terminal
-- After that, run `run_pydistinto_beginners.py` from the Terminal
+- First, run `preprocessing_before_running_pydistinto.py` from the Terminal or from an IDE
+- After that, run `run_pydistinto_beginners.py` from the Terminal or from an IDE
 
 
 ## What is necessary to run the analyses?
@@ -81,6 +81,8 @@ You can set the following parameters in `scripts\parameters.txt`:
 	- tf-idf: tf-idf weighted absolute frequencies based measure
 
 
-## When using pydistinto for research, how can it be references?
+## When using pydistinto for research, how can it be referenced?
 
-Du, K., Dudar, J., & Schöch, C. (2021). pydistinto - a Python implementation of different measures of distinctiveness for contrastive text analysis (Version 0.1.1) [Computer software]. https://doi.org/10.5281/zenodo.5245096
+Software: Du, Keli; Dudar, Julia; Schöch, Christof (2021). pydistinto - a Python implementation of different measures of distinctiveness for contrastive text analysis (Version 0.1.1) [Computer software]. https://doi.org/10.5281/zenodo.5245096
+
+Reference publication: Schöch, Christof (2018): ‘Zeta für die kontrastive Analyse literarischer Texte. Theorie, Implementierung, Fallstudie’, in Quantitative Ansätze in den Literatur- und Geisteswissenschaften. Systematische und historische Perspektiven, ed. by Toni Bernhart, Sandra Richter, Marcus Lepper, Marcus Willand, and Andrea Albrecht (Berlin: de Gruyter), pp. 77–94 <https://www.degruyter.com/view/books/9783110523300/9783110523300-004/9783110523300-004.xml>. 
