@@ -175,6 +175,7 @@ def calculate_scores(docprops1, docprops2, absolute1, absolute2, relfreqs1, relf
         zeta_sd2 = pd.Series(data=zeta_sd2, index=zeta_sd2_index)
     except:
         print("Something went wrong while calculating 'Zeta_log2-transformed'")
+        zeta_sd2 = pd.Series()
         
     print("---calculating scores: 3/10, 'ratio of relative frequencies'---")
     try:
