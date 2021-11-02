@@ -149,13 +149,16 @@ def main(plaintextfolder, taggedfolder, language, sanitycheck='no'):
     print("\n--preprocess. \n\nDepending on the size of your corpus, this may take an hour or two. Let's take a coffee break, you deserve it!")
     if not os.path.exists(taggedfolder):
         os.makedirs(taggedfolder)
-    counter = 0
-    for file in glob.glob(plaintextfolder + "*.txt"):
-        filename, ext = os.path.basename(file).split(".")
-        counter += 1
-        print("next: file", counter, ":", filename)
-        text = read_plaintext(file)
-        tagged = nlp(text)
-        save_tagged(taggedfolder, filename, tagged)
-        if sanitycheck == "yes": 
-            sanity_check(text, tagged)
+    if not os.path.exists(plaintextfolder):
+        raise ValueError("Please make sure the the name of the folder with your plain text data is 'corpus'!")
+    else:
+        counter = 0
+        for file in glob.glob(plaintextfolder + "*.txt"):
+            filename, ext = os.path.basename(file).split(".")
+            counter += 1
+            print("next: file", counter, ":", filename)
+            text = read_plaintext(file)
+            tagged = nlp(text)
+            save_tagged(taggedfolder, filename, tagged)
+            if sanitycheck == "yes": 
+                sanity_check(text, tagged)

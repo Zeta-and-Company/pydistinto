@@ -51,7 +51,7 @@ metadatafile = join(datadir, "metadata.csv")
 stoplistfile = join(datadir, "stoplist.txt")
 
 # It is recommended not to change these
-outputdir = join(workdir, "output")
+outputdir = join(workdir, "output_" + os.path.basename(datadir))
 taggedfolder = join(outputdir, "tagged", "")
 segmentfolder = join(outputdir, "segments1000", "")
 datafolder = join(outputdir, "results", "")
