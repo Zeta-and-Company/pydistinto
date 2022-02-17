@@ -71,6 +71,7 @@ You can set the following parameters in `scripts\parameters.txt`:
 - `no_of_features`: a number, e. g. 20
 - `measures`: following measures are implemented:
 	- zeta_sd0: Zeta
+	- zeta_sd2: Zeta_log2-transformed
 	- rrf_dr0: ratio of relative frequencies
 	- eta_sg0: Gris’ DP based measure
 	- welsh: Welch's t-test
