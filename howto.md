@@ -76,7 +76,6 @@ You can set the following parameters in `scripts\parameters.txt`:
 	- eta_sg0: Gris’ DP based measure
 	- welsh: Welch's t-test
 	- ranksum: Wilcoxon rank-sum test
-	- KL_Divergence: Kullback-Leibler divergence
 	- chi_square: Chi-Squared Test
 	- LLR: Log-Likelihood-Ratio test
 	- tf-idf: tf-idf weighted absolute frequencies based measure
