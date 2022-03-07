@@ -8,4 +8,4 @@ contrast=detective
 target_corpus=yes
 comparison_corpus=no
 no_of_features=25
-measures=zeta_sd0,zeta_sd2,rrf_dr0,eta_sg0,welsh,ranksum,KL_Divergence,chi_square,LLR,tf_idf
+measures=zeta_sd0,zeta_sd2,rrf_dr0,eta_sg0,welsh,ranksum,chi_square,LLR,tf_idf
