@@ -22,8 +22,9 @@ def LLR_test (absolute1, absolute2, p_value = False):
     while LLR_count < len(absolute1):
         obs1 = absolute1_sum[LLR_count]
         obs2 = absolute2_sum[LLR_count]
-        exp = (corpus1 * (obs1 + obs2) ) / (corpus1 + corpus2)
-        LLR_row_result = stats.power_divergence([obs1], f_exp= [exp], lambda_='log-likelihood')
+        exp1 = (corpus1 * (obs1 + obs2) ) / (corpus1 + corpus2)
+        exp2 = (corpus1 * (obs1 + obs2) ) / (corpus1 + corpus2)
+        LLR_row_result = stats.power_divergence([obs1, obs2], f_exp= [exp1, exp2], lambda_='log-likelihood')
         LLR_results.append(LLR_row_result)
         LLR_count+=1
     LLR_full = pd.DataFrame(LLR_results, columns = ['LLR_value', 'p_value'], index=absolute1.index)
