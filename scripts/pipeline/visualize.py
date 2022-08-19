@@ -18,6 +18,7 @@ from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.decomposition import PCA
 import seaborn as sns
+from datetime import datetime
 
 # =================================
 # Pygal style
@@ -109,20 +110,19 @@ def make_barchart(zetadata, zetaplotfile, parameterstring, contraststring, measu
 
 def zetabarchart(segmentlength, featuretype, contrast, measures, numfeatures, droplist, resultsfolder, plotfolder):
     print("--barchart (zetascores)")
+    plotfolder = plotfolder + datetime.now().isoformat(sep="_", timespec="seconds").replace(':', '').replace('-', '_')
     if not os.path.exists(plotfolder):
         os.makedirs(plotfolder)
     parameterstring = str(segmentlength) +"-"+ str(featuretype[0]) +"-"+ str(featuretype[1])
     contraststring = str(contrast[0]) +"_"+ str(contrast[2]) +"-"+ str(contrast[1])
     resultsfile = resultsfolder + "results_" + parameterstring +"_"+ contraststring +".csv"
-    
-    html_file = open(plotfolder + "merged_results_" + str(segmentlength) + ".html",'w',encoding='utf-8')
+    os.chdir(plotfolder)
+    html_file = open("merged_results_" + str(segmentlength) + ".html",'w',encoding='utf-8')
     html_file.write("<html><head>merged distinctive analysis results</head><body>"+"\n")
 
     for measure in measures:
         # Define some strings and filenames
-        zetaplotfile = plotfolder + "zetabarchart_" + parameterstring +"_"+ contraststring +"_" + str(numfeatures) +"-"+str(measure) + ".svg"
-        if not os.path.exists(plotfolder):
-            os.makedirs(plotfolder)
+        zetaplotfile = "zetabarchart_" + parameterstring +"_"+ contraststring +"_" + str(numfeatures) +"-"+str(measure) + ".svg"
         # Get the data and plot it
         zetadata = get_zetadata(resultsfile, measure, numfeatures, droplist)
         try:

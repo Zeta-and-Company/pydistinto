@@ -7,11 +7,12 @@ Created on Sun Jul 18 23:34:41 2021
 print("pydistinto is running, this may take a few minutes...")
 
 """
-The pyzeta set of script is a Python implementation of Craig's Zeta and related measures.
+The pydistinto set of script is a Python implementation of Zeta and related measures.
 Zeta is a measure of keyness or distinctiveness for contrastive analysis of two groups of texts.
 This set of scripts does preprocessing, data preparation, score calculation, and visualization.
 See the readme.md and howto.md files for help on how to run the script.
 """
+
 import warnings
 warnings.filterwarnings('ignore')
 # =================================
@@ -97,7 +98,7 @@ separator = "\t"
 contrast = [parameters['contrast'], parameters['target_corpus'], parameters['comparison_corpus']] # example for roman20 [blanche, policier, scifi, sentimental]
 #contrast = ["random", "two", "one"] # for splitting groups randomly
 logaddition= 0.1 # has effect on log calculation.
-calculate_simple.main(datafolder, dtmfolder, metadatafile, separator, contrast, logaddition, resultsfolder, segmentlength, featuretype, absolutefreqs, relativefreqs, binaryfreqs, tf_frame)
+calculate_simple.main(datafolder, dtmfolder, metadatafile, separator, contrast, logaddition, resultsfolder, segmentlength, featuretype, absolutefreqs, relativefreqs, binaryfreqs, tf_frame, scaling=True)
 
 
 

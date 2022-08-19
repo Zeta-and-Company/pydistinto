@@ -23,7 +23,7 @@ def LLR_test (absolute1, absolute2, p_value = False):
         obs1 = absolute1_sum[LLR_count]
         obs2 = absolute2_sum[LLR_count]
         exp1 = (corpus1 * (obs1 + obs2) ) / (corpus1 + corpus2)
-        exp2 = (corpus1 * (obs1 + obs2) ) / (corpus1 + corpus2)
+        exp2 = (corpus2 * (obs1 + obs2) ) / (corpus1 + corpus2)
         LLR_row_result = stats.power_divergence([obs1, obs2], f_exp= [exp1, exp2], lambda_='log-likelihood')
         LLR_results.append(LLR_row_result)
         LLR_count+=1

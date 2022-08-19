@@ -17,14 +17,9 @@ import os
 import re
 import glob
 import csv
-import glob
 import pandas as pd
-import numpy as np
-from collections import Counter
-import itertools
 import random
 csv.field_size_limit(100000000)
-
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 
