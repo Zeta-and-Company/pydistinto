@@ -2,7 +2,7 @@
 """
 Created on Sun Jul 18 23:34:41 2021
 
-@author: KeliDu
+@author: KeliDu, updated JuliaDudar
 """
 print("pydistinto is running, this may take a few minutes...")
 
@@ -55,7 +55,11 @@ stoplistfile = join(datadir, "stoplist.txt")
 
 # It is recommended not to change these
 outputdir = join(workdir, "output_" + os.path.basename(datadir))
-taggedfolder = join(outputdir, "tagged", "")
+use_randomized_texts = parameters['use_randomized_texts']
+if use_randomized_texts == "yes":
+    taggedfolder = join(outputdir, "randomized", "")
+else:
+    taggedfolder = join(outputdir, "tagged", "")
 segmentfolder = join(outputdir, "segments1000", "")
 datafolder = join(outputdir, "results", "")
 resultsfolder = join(outputdir, "results", "")
