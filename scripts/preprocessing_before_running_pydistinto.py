@@ -2,7 +2,7 @@
 """
 Created on Mon Jul 19 00:55:31 2021
 
-@author: KeliDu
+@author: KeliDu, updated JuliaDudar
 """
 
 """
@@ -20,6 +20,7 @@ import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 os.chdir(dir_path)
 from pipeline import preprocess_spacy
+from pipeline import preprocess_randomizing
 from os.path import join
 from os.path import abspath
 
@@ -53,6 +54,7 @@ stoplistfile = join(datadir, "stoplist.txt")
 # It is recommended not to change these
 outputdir = join(workdir, "output_" + os.path.basename(datadir))
 taggedfolder = join(outputdir, "tagged", "")
+randomized_folder = join(outputdir, "randomized", "")
 segmentfolder = join(outputdir, "segments1000", "")
 datafolder = join(outputdir, "results", "")
 resultsfolder = join(outputdir, "results", "")
@@ -70,6 +72,10 @@ Currently, this module uses Spacy (https://spacy.io/)
 """
 language = parameters['language']
 sanitycheck = "no" # yes|no
-preprocess_spacy.main(plaintextfolder, taggedfolder, language, sanitycheck)
+randomizing = parameters['randomizing']
+random_segment_size = int(parameters['random_segment_size'])
 
+preprocess_spacy.main(plaintextfolder, taggedfolder, language, sanitycheck)
+if randomizing == "yes":
+    preprocess_randomizing.main(taggedfolder, randomized_folder, random_segment_size)
 print('Preprocessing done! Now you can run pydistinto!')
