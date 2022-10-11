@@ -78,7 +78,7 @@ You can set the following parameters in `scripts\parameters.txt`:
 	- ranksum: Wilcoxon rank-sum test
 	- chi_square: Chi-Squared Test
 	- LLR: Log-Likelihood-Ratio test
-	- tf-idf: tf-idf weighted absolute frequencies based measure
+	- tf_idf: tf-idf-weighted absolute frequencies based measure
 
 
 ## When using pydistinto for research, how can it be referenced?
