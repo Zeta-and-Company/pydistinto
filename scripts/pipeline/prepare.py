@@ -91,27 +91,27 @@ def perform_selection(segment, stoplist, featuretype):
     if pos == "all":
         if forms == "words":
             selected = [line[0].lower() for line in segment if
-                        len(line) == 3 and len(line[0]) > 1 and line[0] not in stoplist and line[2] not in stoplist]
+                        len(line) == 3 and len(line[0]) > 1 and line[0].lower() not in stoplist and line[2].lower() not in stoplist]
         elif forms == "lemmata":
             selected = [line[2].lower() for line in segment if
-                        len(line) == 3 and len(line[0]) > 1 and line[0] not in stoplist and line[2] not in stoplist]
+                        len(line) == 3 and len(line[0]) > 1 and line[0].lower() not in stoplist and line[2].lower() not in stoplist]
         elif forms == "pos":
             selected = [line[1].lower() for line in segment if
-                        len(line) == 3 and len(line[0]) > 1 and line[0] not in stoplist and line[2] not in stoplist]
+                        len(line) == 3 and len(line[0]) > 1 and line[0].lower() not in stoplist and line[2].lower() not in stoplist]
     elif pos != "all":
         ## TODO: Turn the test "pos in line[1]" around to allow for more than one POS tag to be defined as the filter.
         if forms == "words":
             selected = [line[0].lower() for line in segment if
-                        len(line) == 3 and len(line[0]) > 1 and line[0] not in stoplist and pos in line[1] and line[2] not in stoplist]
+                        len(line) == 3 and len(line[0]) > 1 and line[0].lower() not in stoplist and pos in line[1] and line[2].lower() not in stoplist]
         elif forms == "pos":
             selected = [line[1].lower() for line in segment if
-                        len(line) == 3 and len(line[0]) > 1 and line[0] not in stoplist and pos in line[1] and line[2] not in stoplist]
+                        len(line) == 3 and len(line[0]) > 1 and line[0].lower() not in stoplist and pos in line[1] and line[2].lower() not in stoplist]
         elif forms == "lemmata":
             selected = []
             for line in segment:
-                if len(line) == 3 and len(line[0]) > 1 and line[0] not in stoplist and pos in line[1] and line[2] not in stoplist and line[2] != "<unknown>":
+                if len(line) == 3 and len(line[0]) > 1 and line[0].lower() not in stoplist and pos in line[1] and line[2].lower() not in stoplist and line[2] != "<unknown>":
                     selected.append(line[2])
-                elif len(line) == 3 and len(line[0]) > 1 and line[0] not in stoplist and pos in line[1] and line[2] not in stoplist and line[2] == "<unknown>":
+                elif len(line) == 3 and len(line[0]) > 1 and line[0].lower() not in stoplist and pos in line[1] and line[2].lower() not in stoplist and line[2] == "<unknown>":
                     selected.append(line[0])
     else:
         selected = []
@@ -259,7 +259,7 @@ def main(taggedfolder, segmentfolder, datafolder, dtmfolder, segmentlength, max_
     absolutefreqs = allfeaturecounts
     #absolutefreqs = read_freqsfile(dtmfolder + "dtm_" + parameterstring + "_absolutefreqs.csv")
     absolutefreqs_sum, relativefreqs, binaryfreqs = transform_dtm(absolutefreqs, segmentlength)
-    save_transformed(relativefreqs, binaryfreqs, dtmfolder, parameterstring)
+    #save_transformed(relativefreqs, binaryfreqs, dtmfolder, parameterstring)
     tf_frame = auto_tfidf(dtmfolder, segmentfolder)
     print(tf_frame.shape, absolutefreqs.shape)
     return absolutefreqs, relativefreqs, binaryfreqs, absolutefreqs_sum, tf_frame
