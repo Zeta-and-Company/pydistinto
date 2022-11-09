@@ -187,8 +187,8 @@ def auto_tfidf(dtmfolder, segmentfolder):
     tf_frame.set_index("idno", inplace=True)
     print(tf_frame.head())
     tf_frame = tf_frame.mul(100)
-    with open(dtmfolder + "tfidf_smoothed_sublinear.csv", "w", encoding="utf-8") as outfile:
-        tf_frame.to_csv(outfile, sep=",")
+    #with open(dtmfolder + "tfidf_smoothed_sublinear.csv", "w", encoding="utf-8") as outfile:
+    #    tf_frame.to_csv(outfile, sep=",")
     return tf_frame
 
 # =================================
