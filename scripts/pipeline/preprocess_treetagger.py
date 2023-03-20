@@ -66,7 +66,7 @@ def save_tagged(taggedfolder, filename, tagged):
 def sanity_check(text, tagged): 
     """
     Performs a simple sanity check on the data. 
-    Checks number of words in inpu text. 
+    Checks number of words in input text. 
     Checks number of lines in tagged output. 
     If these numbers are similar, it looks good. 
     """
