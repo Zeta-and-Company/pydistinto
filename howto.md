@@ -63,11 +63,13 @@ You can set the following parameters in `scripts\parameters.txt`:
 - `workdir`: directory for saving results
 - `language`: Catalan, Chinese, Danish, Dutch, English, French, German, Greek, Italian, Japanese, Lithuanian, Macedonian, Norwegian Bokmål, Polish, Portuguese, Romanian, Russian, Spanish (see [Spacy](https://spacy.io/usage) and install the trained pipelines in order to run POS-Tagging. “Multi-language” is not supported)
 - `segmentlength`: a number, e. g. 5000; or “text” which means no segmentation
-- `forms`: lemmata
+- `forms`: 
+ 	- lemmata
+ 	- words
 - `pos`: all
-- `contrast`: detective
-- `target_corpus`: yes
-- `comparison_corpus`: no
+- `contrast`: the name of the column in the metadata file you want to use for comparing the corpora, e.g. the column "detective" in the given example
+- `target_corpus`: the value of the cell in the column specified at 'contrast' that the target corpus has, e.g. "yes" in the given example
+- `comparison_corpus`: the value of the cell in the column specified at 'contrast' that the comparison corpus has, e.g. "no" in the given example
 - `no_of_features`: a number, e. g. 20
 - `measures`: following measures are implemented:
 	- zeta_sd0: Zeta
