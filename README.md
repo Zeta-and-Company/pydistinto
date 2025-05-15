@@ -16,3 +16,7 @@ To facilitate the use of relevant measures that can be used for contrastive text
 ## Requirements and installation
 
 * Requirements: Python 3 with pandas, numpy, sklearn, pygal, spacy
+
+## Citation
+
+Du, K., Dudar, J., & Schöch, C. (2021). pydistinto - a Python implementation of different measures of distinctiveness for contrastive text analysis (Version 0.1.1) [Computer software]. https://doi.org/10.5281/zenodo.5245096
