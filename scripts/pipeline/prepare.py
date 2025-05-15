@@ -214,8 +214,9 @@ def transform_dtm(absolutefreqs, segmentlength):
         relativefreqs = absolutefreqs / segmentlength
         print("\nrelfreqs\n", relativefreqs.head(), segmentlength)
     print("Next: transforming to binary frequencies...")
-    binaryfreqs = absolutefreqs.copy()
-    binaryfreqs[binaryfreqs > 0] = 1
+    #binaryfreqs = absolutefreqs.copy()
+    #binaryfreqs[binaryfreqs > 0] = 1
+    binaryfreqs = (absolutefreqs != 0).astype('int')
     print("\nbinaryfreqs\n", binaryfreqs.head(50), segmentlength)
     print("\nabsolutefreqs\n", absolutefreqs.head(50), segmentlength)
     return absolutefreqs_sum, relativefreqs, binaryfreqs
@@ -249,7 +250,7 @@ def main(taggedfolder, segmentfolder, datafolder, dtmfolder, segmentlength, max_
     if os.path.exists(segmentfolder):
         shutil.rmtree(segmentfolder)
     counter = 0
-    for file in glob.glob(taggedfolder + "*.csv"):
+    for file in glob.glob(os.path.join(taggedfolder, "*.csv")):
         filename, ext = os.path.basename(file).split(".")
         counter +=1
         print("next: file no", counter, "- file", filename)

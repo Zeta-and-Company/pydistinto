@@ -58,7 +58,7 @@ def get_zetadata(resultsfile, measure, numfeatures, droplist):
             zetadata.drop(item, axis=0, inplace=True)
         zetadata = zetadata.dropna()
 
-        zetadata = zetadata.head(numfeatures).append(zetadata.tail(numfeatures))
+        zetadata = pd.concat(zetadata.head(numfeatures),zetadata.tail(numfeatures))
         zetadata = zetadata.reset_index(drop=False)
         print("\nzetadata\n", zetadata.head())
         return zetadata
